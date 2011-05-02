@@ -27,7 +27,7 @@ import blogzz.handlers as handlers
 
 settings = {
 	"blog_title": u"Blogzz",
-	"template_path": os.path.join(os.path.dirname(__file__), "templates"),
+	"template_path": os.path.join(os.path.dirname(__file__), "../templates"),
 	"ui_modules": {"Entry": handlers.EntryModule},
 	"xsrf_cookies": True,
 	"use_buzz": True,
