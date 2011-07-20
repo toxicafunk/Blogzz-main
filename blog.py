@@ -24,13 +24,15 @@ import tornado.wsgi
 import wsgiref.handlers
 
 import blogzz.handlers as handlers
+import blogzz.uimodules as uimodules
 
 settings = {
 	"blog_title": u"Blogzz",
 	"template_path": os.path.join(os.path.dirname(__file__), "../templates"),
-	"ui_modules": {"Entry": handlers.EntryModule},
+	"ui_modules": {"Entry": uimodules.EntryModule},
 	"xsrf_cookies": True,
 	"use_buzz": True,
+	"autoescape": None
 }
 application = tornado.wsgi.WSGIApplication([
 	(r"/", handlers.HomeHandler),
