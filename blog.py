@@ -27,7 +27,6 @@ import blogzz.handlers as handlers
 import blogzz.uimodules as uimodules
 
 settings = {
-	"blog_title": u"Blogzz",
 	"template_path": os.path.join(os.path.dirname(__file__), "../templates"),
 	"ui_modules": {"Entry": uimodules.EntryModule},
 	"xsrf_cookies": True,
@@ -35,14 +34,15 @@ settings = {
 	"autoescape": None
 }
 application = tornado.wsgi.WSGIApplication([
-	(r"/", handlers.HomeHandler),
-	(r"/archive", handlers.ArchiveHandler),
-	(r"/feed", handlers.FeedHandler),
-	(r"/entry/([^/]+)", handlers.EntryHandler),
-	(r"/compose", handlers.ComposeHandler),
+	(r"/", handlers.DashboardHandler),
+	(r"/([^/]+)", handlers.HomeHandler),
+	(r"/([^/]+)/archive", handlers.ArchiveHandler),
+	(r"/([^/]+)/feed", handlers.FeedHandler),
+	(r"/([^/]+)/entry/([^/]+)", handlers.EntryHandler),
+	(r"/([^/]+)/compose", handlers.ComposeHandler),
 	(r"/atomtest", handlers.AtomTestHandler),
-	(r"/subhub", handlers.SubHubHandler),
-	(r"/hubcallback", handlers.HubCallbackHandler),
+	(r"/([^/]+)/subhub", handlers.SubHubHandler),
+	(r"/([^/]+)/hubcallback", handlers.HubCallbackHandler),
 ], **settings)
 
 def real_main():
@@ -55,6 +55,7 @@ def real_main():
 def profile_main():
 	# This is the main function for profiling
 	# We've renamed our original main() above to real_main()
+	# It depends on python-profiler ubuntu package
 	import cProfile, pstats
 	prof = cProfile.Profile()
 	prof = prof.runctx("real_main()", globals(), locals())
@@ -70,5 +71,5 @@ def profile_main():
 	print "</pre>"
 
 if __name__ == "__main__":
-	real_main()
 	#profile_main()
+	real_main()
